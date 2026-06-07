@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "omnetpp_ini",
+      "camelcase": "OmnetppIni",
+      "title": "OMNeT++ INI",
+      "scope": "source.omnetpp_ini",
+      "file-types": [
+        "ini"
+      ],
+      "injection-regex": "^omnetpp_ini$",
+      "class-name": "TreeSitterOmnetppIni"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Tree-sitter parser for OMNeT++ INI files",
+    "authors": [
+      {
+        "name": "Johann Hanke",
+        "url": ""
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/HannHank/tree-sitter-ini",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": false,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}

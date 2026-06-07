@@ -1,0 +1,623 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
+  "name": "omnetpp_ini",
+  "rules": {
+    "source_file": {
+      "type": "REPEAT",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_statement"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "comment"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\r?\\n"
+          }
+        ]
+      }
+    },
+    "_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "section_heading"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "include_directive"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "setting"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "comment"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "\\r?\\n"
+            },
+            {
+              "type": "STRING",
+              "value": "\u0000"
+            }
+          ]
+        }
+      ]
+    },
+    "comment": {
+      "type": "PATTERN",
+      "value": "#.*"
+    },
+    "section_heading": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "["
+            },
+            {
+              "type": "STRING",
+              "value": "General"
+            },
+            {
+              "type": "STRING",
+              "value": "]"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "["
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "Config"
+                },
+                {
+                  "type": "STRING",
+                  "value": "config"
+                }
+              ]
+            },
+            {
+              "type": "PATTERN",
+              "value": "[ \\t]+"
+            },
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "section_identifier"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "]"
+            }
+          ]
+        }
+      ]
+    },
+    "section_identifier": {
+      "type": "PATTERN",
+      "value": "[^\\]\\n\\r]+"
+    },
+    "include_directive": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "include"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[ \\t]+"
+        },
+        {
+          "type": "FIELD",
+          "name": "path",
+          "content": {
+            "type": "SYMBOL",
+            "name": "include_path"
+          }
+        }
+      ]
+    },
+    "include_path": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\s#\"]+"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string_literal"
+        }
+      ]
+    },
+    "setting": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "keyword_name"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "setting_name"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "setting_value"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "keyword_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "network"
+        },
+        {
+          "type": "STRING",
+          "value": "extends"
+        },
+        {
+          "type": "STRING",
+          "value": "description"
+        },
+        {
+          "type": "STRING",
+          "value": "fallback-to"
+        },
+        {
+          "type": "STRING",
+          "value": "experiment"
+        },
+        {
+          "type": "STRING",
+          "value": "measurement"
+        },
+        {
+          "type": "STRING",
+          "value": "replication"
+        },
+        {
+          "type": "STRING",
+          "value": "repeat"
+        },
+        {
+          "type": "STRING",
+          "value": "seed-set"
+        },
+        {
+          "type": "STRING",
+          "value": "sim-time-limit"
+        },
+        {
+          "type": "STRING",
+          "value": "cpu-time-limit"
+        },
+        {
+          "type": "STRING",
+          "value": "real-time-limit"
+        },
+        {
+          "type": "STRING",
+          "value": "warmup-period"
+        },
+        {
+          "type": "STRING",
+          "value": "simtime-resolution"
+        },
+        {
+          "type": "STRING",
+          "value": "simtime-scale"
+        },
+        {
+          "type": "STRING",
+          "value": "warnings"
+        },
+        {
+          "type": "STRING",
+          "value": "debug-on-errors"
+        },
+        {
+          "type": "STRING",
+          "value": "print-undisposed"
+        },
+        {
+          "type": "STRING",
+          "value": "parameter-mutability-check"
+        },
+        {
+          "type": "STRING",
+          "value": "debugger-attach-on-startup"
+        },
+        {
+          "type": "STRING",
+          "value": "debugger-attach-on-error"
+        },
+        {
+          "type": "STRING",
+          "value": "debugger-attach-command"
+        },
+        {
+          "type": "STRING",
+          "value": "debugger-attach-wait-time"
+        },
+        {
+          "type": "STRING",
+          "value": "check-signals"
+        },
+        {
+          "type": "STRING",
+          "value": "debug-statistics-recording"
+        },
+        {
+          "type": "STRING",
+          "value": "result-dir"
+        },
+        {
+          "type": "STRING",
+          "value": "record-eventlog"
+        },
+        {
+          "type": "STRING",
+          "value": "eventlog-file"
+        },
+        {
+          "type": "STRING",
+          "value": "fingerprint"
+        },
+        {
+          "type": "STRING",
+          "value": "record-scalar-results"
+        },
+        {
+          "type": "STRING",
+          "value": "output-scalar-file"
+        },
+        {
+          "type": "STRING",
+          "value": "output-scalar-file-append"
+        },
+        {
+          "type": "STRING",
+          "value": "output-scalar-precision"
+        },
+        {
+          "type": "STRING",
+          "value": "scalar-recording"
+        },
+        {
+          "type": "STRING",
+          "value": "bin-recording"
+        },
+        {
+          "type": "STRING",
+          "value": "param-recording"
+        },
+        {
+          "type": "STRING",
+          "value": "record-vector-results"
+        },
+        {
+          "type": "STRING",
+          "value": "output-vector-file"
+        },
+        {
+          "type": "STRING",
+          "value": "output-vector-file-append"
+        },
+        {
+          "type": "STRING",
+          "value": "output-vector-precision"
+        },
+        {
+          "type": "STRING",
+          "value": "vector-recording"
+        },
+        {
+          "type": "STRING",
+          "value": "vector-record-empty"
+        },
+        {
+          "type": "STRING",
+          "value": "vector-record-eventnumbers"
+        },
+        {
+          "type": "STRING",
+          "value": "vector-recording-intervals"
+        },
+        {
+          "type": "STRING",
+          "value": "output-vectors-memory-limit"
+        },
+        {
+          "type": "STRING",
+          "value": "vector-buffer"
+        },
+        {
+          "type": "STRING",
+          "value": "parallel-simulation"
+        },
+        {
+          "type": "STRING",
+          "value": "parsim-num-partitions"
+        },
+        {
+          "type": "STRING",
+          "value": "partition-id"
+        },
+        {
+          "type": "STRING",
+          "value": "image-path"
+        },
+        {
+          "type": "STRING",
+          "value": "fname-append-host"
+        },
+        {
+          "type": "STRING",
+          "value": "ned-path"
+        },
+        {
+          "type": "STRING",
+          "value": "ned-package-exclusions"
+        },
+        {
+          "type": "STRING",
+          "value": "total-stack"
+        },
+        {
+          "type": "STRING",
+          "value": "scheduler-class"
+        },
+        {
+          "type": "STRING",
+          "value": "parsim-communications-class"
+        },
+        {
+          "type": "STRING",
+          "value": "parsim-synchronization-class"
+        },
+        {
+          "type": "STRING",
+          "value": "eventlogmanager-class"
+        },
+        {
+          "type": "STRING",
+          "value": "outputvectormanager-class"
+        },
+        {
+          "type": "STRING",
+          "value": "outputscalarmanager-class"
+        },
+        {
+          "type": "STRING",
+          "value": "snapshotmanager-class"
+        },
+        {
+          "type": "STRING",
+          "value": "futureeventset-class"
+        },
+        {
+          "type": "STRING",
+          "value": "fingerprintcalculator-class"
+        },
+        {
+          "type": "STRING",
+          "value": "rng-class"
+        },
+        {
+          "type": "STRING",
+          "value": "num-rngs"
+        },
+        {
+          "type": "STRING",
+          "value": "load-libs"
+        },
+        {
+          "type": "STRING",
+          "value": "configuration-class"
+        },
+        {
+          "type": "STRING",
+          "value": "user-interface"
+        }
+      ]
+    },
+    "setting_name": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z0-9_.*-]+[a-zA-Z0-9_.*\\[\\]-]*"
+    },
+    "setting_value": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "xml_function"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[^#\\n\\\\\"()]+"
+          },
+          {
+            "type": "STRING",
+            "value": "("
+          },
+          {
+            "type": "STRING",
+            "value": ")"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\\\[ \\t]*(\\r?\\n)?"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "string_literal"
+          }
+        ]
+      }
+    },
+    "xml_function": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "xml"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ \\t]+"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "PATTERN",
+                        "value": "[ \\t]+"
+                      },
+                      {
+                        "type": "PATTERN",
+                        "value": "\\\\[ \\t]*\\r?\\n"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "xml_content",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "string_literal"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[ \\t]+"
+              },
+              {
+                "type": "PATTERN",
+                "value": "\\\\[ \\t]*\\r?\\n"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "string_literal": {
+      "type": "PATTERN",
+      "value": "\"[^\"\\\\]*(?:\\\\[\\s\\S][^\"\\\\]*)*\""
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "[ \\t]"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": [],
+  "reserved": {}
+}

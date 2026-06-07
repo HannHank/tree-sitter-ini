@@ -1,0 +1,24 @@
+{
+  "name": "tree-sitter-ini",
+  "version": "1.0.0",
+  "description": "About tree-sitter parser for OMNeT++ INI files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HannHank/tree-sitter-ini.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HannHank/tree-sitter-ini/issues"
+  },
+  "homepage": "https://github.com/HannHank/tree-sitter-ini#readme",
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.9"
+  }
+}

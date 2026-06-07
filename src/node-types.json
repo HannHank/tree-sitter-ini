@@ -1,0 +1,479 @@
+[
+  {
+    "type": "include_directive",
+    "named": true,
+    "fields": {
+      "path": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "include_path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "include_path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "keyword_name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "section_heading",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "section_identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "setting",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword_name",
+            "named": true
+          },
+          {
+            "type": "setting_name",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "setting_value",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "setting_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "xml_function",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "include_directive",
+          "named": true
+        },
+        {
+          "type": "section_heading",
+          "named": true
+        },
+        {
+          "type": "setting",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "xml_function",
+    "named": true,
+    "fields": {
+      "xml_content": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string_literal",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "\u0000",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "Config",
+    "named": false
+  },
+  {
+    "type": "General",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
+    "type": "bin-recording",
+    "named": false
+  },
+  {
+    "type": "check-signals",
+    "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
+  },
+  {
+    "type": "config",
+    "named": false
+  },
+  {
+    "type": "configuration-class",
+    "named": false
+  },
+  {
+    "type": "cpu-time-limit",
+    "named": false
+  },
+  {
+    "type": "debug-on-errors",
+    "named": false
+  },
+  {
+    "type": "debug-statistics-recording",
+    "named": false
+  },
+  {
+    "type": "debugger-attach-command",
+    "named": false
+  },
+  {
+    "type": "debugger-attach-on-error",
+    "named": false
+  },
+  {
+    "type": "debugger-attach-on-startup",
+    "named": false
+  },
+  {
+    "type": "debugger-attach-wait-time",
+    "named": false
+  },
+  {
+    "type": "description",
+    "named": false
+  },
+  {
+    "type": "eventlog-file",
+    "named": false
+  },
+  {
+    "type": "eventlogmanager-class",
+    "named": false
+  },
+  {
+    "type": "experiment",
+    "named": false
+  },
+  {
+    "type": "extends",
+    "named": false
+  },
+  {
+    "type": "fallback-to",
+    "named": false
+  },
+  {
+    "type": "fingerprint",
+    "named": false
+  },
+  {
+    "type": "fingerprintcalculator-class",
+    "named": false
+  },
+  {
+    "type": "fname-append-host",
+    "named": false
+  },
+  {
+    "type": "futureeventset-class",
+    "named": false
+  },
+  {
+    "type": "image-path",
+    "named": false
+  },
+  {
+    "type": "include",
+    "named": false
+  },
+  {
+    "type": "load-libs",
+    "named": false
+  },
+  {
+    "type": "measurement",
+    "named": false
+  },
+  {
+    "type": "ned-package-exclusions",
+    "named": false
+  },
+  {
+    "type": "ned-path",
+    "named": false
+  },
+  {
+    "type": "network",
+    "named": false
+  },
+  {
+    "type": "num-rngs",
+    "named": false
+  },
+  {
+    "type": "output-scalar-file",
+    "named": false
+  },
+  {
+    "type": "output-scalar-file-append",
+    "named": false
+  },
+  {
+    "type": "output-scalar-precision",
+    "named": false
+  },
+  {
+    "type": "output-vector-file",
+    "named": false
+  },
+  {
+    "type": "output-vector-file-append",
+    "named": false
+  },
+  {
+    "type": "output-vector-precision",
+    "named": false
+  },
+  {
+    "type": "output-vectors-memory-limit",
+    "named": false
+  },
+  {
+    "type": "outputscalarmanager-class",
+    "named": false
+  },
+  {
+    "type": "outputvectormanager-class",
+    "named": false
+  },
+  {
+    "type": "parallel-simulation",
+    "named": false
+  },
+  {
+    "type": "param-recording",
+    "named": false
+  },
+  {
+    "type": "parameter-mutability-check",
+    "named": false
+  },
+  {
+    "type": "parsim-communications-class",
+    "named": false
+  },
+  {
+    "type": "parsim-num-partitions",
+    "named": false
+  },
+  {
+    "type": "parsim-synchronization-class",
+    "named": false
+  },
+  {
+    "type": "partition-id",
+    "named": false
+  },
+  {
+    "type": "print-undisposed",
+    "named": false
+  },
+  {
+    "type": "real-time-limit",
+    "named": false
+  },
+  {
+    "type": "record-eventlog",
+    "named": false
+  },
+  {
+    "type": "record-scalar-results",
+    "named": false
+  },
+  {
+    "type": "record-vector-results",
+    "named": false
+  },
+  {
+    "type": "repeat",
+    "named": false
+  },
+  {
+    "type": "replication",
+    "named": false
+  },
+  {
+    "type": "result-dir",
+    "named": false
+  },
+  {
+    "type": "rng-class",
+    "named": false
+  },
+  {
+    "type": "scalar-recording",
+    "named": false
+  },
+  {
+    "type": "scheduler-class",
+    "named": false
+  },
+  {
+    "type": "section_identifier",
+    "named": true
+  },
+  {
+    "type": "seed-set",
+    "named": false
+  },
+  {
+    "type": "setting_name",
+    "named": true
+  },
+  {
+    "type": "sim-time-limit",
+    "named": false
+  },
+  {
+    "type": "simtime-resolution",
+    "named": false
+  },
+  {
+    "type": "simtime-scale",
+    "named": false
+  },
+  {
+    "type": "snapshotmanager-class",
+    "named": false
+  },
+  {
+    "type": "string_literal",
+    "named": true
+  },
+  {
+    "type": "total-stack",
+    "named": false
+  },
+  {
+    "type": "user-interface",
+    "named": false
+  },
+  {
+    "type": "vector-buffer",
+    "named": false
+  },
+  {
+    "type": "vector-record-empty",
+    "named": false
+  },
+  {
+    "type": "vector-record-eventnumbers",
+    "named": false
+  },
+  {
+    "type": "vector-recording",
+    "named": false
+  },
+  {
+    "type": "vector-recording-intervals",
+    "named": false
+  },
+  {
+    "type": "warmup-period",
+    "named": false
+  },
+  {
+    "type": "warnings",
+    "named": false
+  },
+  {
+    "type": "xml",
+    "named": false
+  }
+]
