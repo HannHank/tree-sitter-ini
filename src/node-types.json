@@ -44,8 +44,18 @@
         "required": false,
         "types": [
           {
-            "type": "section_identifier",
+            "type": "section_word",
             "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "Config",
+            "named": false
           }
         ]
       }
@@ -90,6 +100,10 @@
       "required": false,
       "types": [
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -129,11 +143,16 @@
     }
   },
   {
+    "type": "string_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "xml_function",
     "named": true,
     "fields": {
       "xml_content": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -187,10 +206,6 @@
   {
     "type": "comment",
     "named": true
-  },
-  {
-    "type": "config",
-    "named": false
   },
   {
     "type": "configuration-class",
@@ -405,7 +420,7 @@
     "named": false
   },
   {
-    "type": "section_identifier",
+    "type": "section_word",
     "named": true
   },
   {
@@ -431,10 +446,6 @@
   {
     "type": "snapshotmanager-class",
     "named": false
-  },
-  {
-    "type": "string_literal",
-    "named": true
   },
   {
     "type": "total-stack",

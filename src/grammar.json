@@ -104,25 +104,24 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": "Config"
+                  "type": "FIELD",
+                  "name": "type",
+                  "content": {
+                    "type": "STRING",
+                    "value": "Config"
+                  }
                 },
                 {
-                  "type": "STRING",
-                  "value": "config"
+                  "type": "BLANK"
                 }
               ]
-            },
-            {
-              "type": "PATTERN",
-              "value": "[ \\t]+"
             },
             {
               "type": "FIELD",
               "name": "name",
               "content": {
                 "type": "SYMBOL",
-                "name": "section_identifier"
+                "name": "section_word"
               }
             },
             {
@@ -133,9 +132,9 @@
         }
       ]
     },
-    "section_identifier": {
+    "section_word": {
       "type": "PATTERN",
-      "value": "[^\\]\\n\\r]+"
+      "value": "[^\\]\\n\\r \\t]+"
     },
     "include_directive": {
       "type": "SEQ",
@@ -492,7 +491,7 @@
     },
     "setting_name": {
       "type": "PATTERN",
-      "value": "[a-zA-Z0-9_.*-]+[a-zA-Z0-9_.*\\[\\]-]*"
+      "value": "[a-zA-Z0-9_.*?^$-]+[a-zA-Z0-9_.*\\[\\]{}?^,$:-]*"
     },
     "setting_value": {
       "type": "REPEAT1",
@@ -520,6 +519,27 @@
             "value": "\\\\[ \\t]*(\\r?\\n)?"
           },
           {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "comment"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "PATTERN",
+                "value": "\\r?\\n[ \\t]+"
+              }
+            ]
+          },
+          {
             "type": "SYMBOL",
             "name": "string_literal"
           }
@@ -532,54 +552,6 @@
         {
           "type": "STRING",
           "value": "xml"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "PATTERN",
-            "value": "[ \\t]+"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "PATTERN",
-                        "value": "[ \\t]+"
-                      },
-                      {
-                        "type": "PATTERN",
-                        "value": "\\\\[ \\t]*\\r?\\n"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "type": "FIELD",
-                  "name": "xml_content",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "string_literal"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
         },
         {
           "type": "REPEAT",
@@ -599,13 +571,50 @@
         },
         {
           "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[^)\"'\\n\\\\]+"
+              },
+              {
+                "type": "PATTERN",
+                "value": "\\\\[ \\t]*(\\r?\\n)?"
+              },
+              {
+                "type": "FIELD",
+                "name": "xml_content",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "string_literal"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
           "value": ")"
         }
       ]
     },
     "string_literal": {
-      "type": "PATTERN",
-      "value": "\"[^\"\\\\]*(?:\\\\[\\s\\S][^\"\\\\]*)*\""
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "\"[^\"\\\\]*(?:\\\\[\\s\\S][^\"\\\\]*)*\""
+        },
+        {
+          "type": "PATTERN",
+          "value": "'[^'\\\\]*(?:\\\\[\\s\\S][^'\\\\]*)*'"
+        }
+      ]
     }
   },
   "extras": [
@@ -614,7 +623,14 @@
       "value": "[ \\t]"
     }
   ],
-  "conflicts": [],
+  "conflicts": [
+    [
+      "setting"
+    ],
+    [
+      "setting_value"
+    ]
+  ],
   "precedences": [],
   "externals": [],
   "inline": [],

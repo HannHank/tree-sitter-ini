@@ -4,6 +4,12 @@ module.exports = grammar({
   // automatically handle horizontal whitespace
   extras: ($) => [/[ \t]/],
 
+  // generalized LR → TS will fork at runtime and resolve the conflict 
+  conflicts: ($) => [
+    [$.setting],
+    [$.setting_value]
+  ],
+
   rules: {
     source_file: ($) => repeat(choice($._statement, $.comment, /\r?\n/)),
 
@@ -19,16 +25,16 @@ module.exports = grammar({
     section_heading: ($) =>
       choice(
         seq("[", "General", "]"),
+
         seq(
           "[",
-          choice("Config", "config"),
-          /[ \t]+/,
-          field("name", $.section_identifier),
+          optional(field("type", "Config")),
+          field("name", $.section_word),
           "]",
         ),
       ),
 
-    section_identifier: ($) => /[^\]\n\r]+/,
+    section_word: ($) => /[^\]\n\r \t]+/,
 
     include_directive: ($) =>
       seq("include", /[ \t]+/, field("path", $.include_path)),
@@ -115,34 +121,40 @@ module.exports = grammar({
       ),
 
     // do not allow to start with [ in order to avoid confusions with section headings
-    setting_name: ($) => /[a-zA-Z0-9_.*-]+[a-zA-Z0-9_.*\[\]-]*/,
+    setting_name: ($) => /[a-zA-Z0-9_.*?^$-]+[a-zA-Z0-9_.*\[\]{}?^,$:-]*/, // not really sure if I am covering all valid characters
 
     setting_value: ($) =>
       repeat1(
         choice(
           $.xml_function,
-          /[^#\n\\"()]+/,  
-          "(",             
-          ")",             
-          /\\[ \t]*(\r?\n)?/,
+          /[^#\n\\"()]+/,
+          "(",
+          ")",
+          /\\[ \t]*(\r?\n)?/, // legacy opp 5 
+          seq(optional($.comment), /\r?\n[ \t]+/), 
           $.string_literal,
         ),
       ),
     xml_function: ($) =>
       seq(
         "xml",
-        repeat(/[ \t]+/), 
+        repeat(choice(/[ \t]+/, /\\[ \t]*\r?\n/)),
         "(",
-        optional(
-          seq(
-            repeat(choice(/[ \t]+/, /\\[ \t]*\r?\n/)),
+        repeat(
+          choice(
+            /[^)"'\n\\]+/,
+            /\\[ \t]*(\r?\n)?/,
             field("xml_content", $.string_literal),
           ),
         ),
-        repeat(choice(/[ \t]+/, /\\[ \t]*\r?\n/)),
         ")",
       ),
 
-    string_literal: ($) => /"[^"\\]*(?:\\[\s\S][^"\\]*)*"/,
+    string_literal: ($) =>
+      choice(
+        // respects both single and double quotes for xml content
+        /"[^"\\]*(?:\\[\s\S][^"\\]*)*"/,
+        /'[^'\\]*(?:\\[\s\S][^'\\]*)*'/,
+      ),
   },
 });

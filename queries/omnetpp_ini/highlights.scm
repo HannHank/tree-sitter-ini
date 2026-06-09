@@ -1,9 +1,8 @@
 "[" @punctuation.bracket
 "]" @punctuation.bracket
-(section_heading "Config" @keyword)
-(section_heading "config" @keyword)
 (section_heading "General" @keyword)
-(section_identifier) @type
+(section_heading type: _ @keyword)
+(section_word) @entity.name.class
 (keyword_name) @keyword
 (setting_name) @property
 "=" @operator
